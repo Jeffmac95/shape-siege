@@ -1,0 +1,41 @@
+import InputHandler from "./inputHandler.js"
+import Player from "./player.js"
+import Map from "./map.js"
+import Camera from "./camera.js"
+import Projectile from "./projectile.js"
+
+export default class Game {
+    constructor(canvas, ctx) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        this.width = canvas.width;
+        this.height = canvas.height;
+
+        this.input = new InputHandler(this);
+        this.map = new Map();
+        this.camera = new Camera(canvas, 1024, 1024); // mapWidth/height in pixels
+        this.player = new Player(this);
+        this.projectiles = [];
+    }
+
+
+    spawnProjectile(x, y, destX, destY) {
+        this.projectiles.push(new Projectile(this, x, y, destX, destY));
+    }
+
+    update(deltaTime) {
+        this.player.update(deltaTime);
+        this.camera.follow(this.player);
+        this.projectiles = this.projectiles.filter(p => {
+            p.update(deltaTime);
+            return !p.markedForDeletion;
+        });
+    }
+
+    render() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.map.drawTiles(this.ctx, this.camera);
+        this.player.draw(this.ctx, this.camera);
+        this.projectiles.forEach(p => p.draw(this.ctx, this.camera));
+    }
+}

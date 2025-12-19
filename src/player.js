@@ -7,7 +7,7 @@ export default class Player {
         this.y = 128;
         this.color = "#FF0000";
         this.attackCooldown = 0;
-        this.attackCooldownMax = 1000;
+        this.attackCooldownMax = 600;
     }
 
     draw(ctx, camera) {

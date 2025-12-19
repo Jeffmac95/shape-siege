@@ -11,7 +11,7 @@ export default class Projectile {
         const distance = Math.sqrt(dx * dx + dy * dy);
         this.dx = (dx / distance) || 0;
         this.dy = (dy / distance) || 0;
-        this.speed = 7;
+        this.speed = 6;
 
         this.width = 4;
         this.height = 4;

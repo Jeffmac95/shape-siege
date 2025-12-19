@@ -3,6 +3,8 @@ import Player from "./player.js"
 import Map from "./map.js"
 import Camera from "./camera.js"
 import Projectile from "./projectile.js"
+import WaveManager from "./waveManager.js"
+import Quadron from "./quadron.js"
 
 export default class Game {
     constructor(canvas, ctx) {
@@ -15,12 +17,26 @@ export default class Game {
         this.map = new Map();
         this.camera = new Camera(canvas, 1024, 1024); // mapWidth/height in pixels
         this.player = new Player(this);
+        this.waveManager = new WaveManager(this);
         this.projectiles = [];
+        this.monsters = [];
     }
 
 
     spawnProjectile(x, y, destX, destY) {
         this.projectiles.push(new Projectile(this, x, y, destX, destY));
+    }
+
+    spawnMonster(type, x, y) {
+        let monster;
+        if (type === "quadron") {
+            monster = new Quadron(this, x, y);
+        }
+
+        if (monster) {
+            this.monsters.push(monster);
+        }
+        console.log(`spawning: ${type}, at: ${x},${y}`);
     }
 
     update(deltaTime) {
@@ -30,6 +46,11 @@ export default class Game {
             p.update(deltaTime);
             return !p.markedForDeletion;
         });
+        //this.monsters.forEach(m => m.update(deltaTime));
+        this.monsters = this.monsters.filter(m => {
+            return !m.markedForDeath;
+        });
+        this.waveManager.update(deltaTime);
     }
 
     render() {
@@ -37,5 +58,6 @@ export default class Game {
         this.map.drawTiles(this.ctx, this.camera);
         this.player.draw(this.ctx, this.camera);
         this.projectiles.forEach(p => p.draw(this.ctx, this.camera));
+        this.monsters.forEach(m => m.draw(this.ctx, this.camera));
     }
 }

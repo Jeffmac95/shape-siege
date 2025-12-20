@@ -5,6 +5,7 @@ import Camera from "./camera.js"
 import Projectile from "./projectile.js"
 import WaveManager from "./waveManager.js"
 import Quadron from "./quadron.js"
+import CollisionManager from "./collisionManager.js"
 
 export default class Game {
     constructor(canvas, ctx) {
@@ -18,6 +19,7 @@ export default class Game {
         this.camera = new Camera(canvas, 1024, 1024); // mapWidth/height in pixels
         this.player = new Player(this);
         this.waveManager = new WaveManager(this);
+        this.collisionManager = new CollisionManager(this);
         this.projectiles = [];
         this.monsters = [];
     }
@@ -51,6 +53,7 @@ export default class Game {
             return !m.markedForDeath;
         });
         this.waveManager.update(deltaTime);
+        this.collisionManager.update();
     }
 
     render() {

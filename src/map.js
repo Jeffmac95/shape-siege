@@ -42,35 +42,4 @@ export default class Map {
             }
         }
     }
-
-    isColliding(playerX, playerY, playerWidth, playerHeight) {
-        const left = playerX - playerWidth / 2;
-        const right = playerX + playerWidth / 2;
-        const top = playerY - playerHeight / 2;
-        const bottom = playerY + playerHeight / 2;
-
-        const corners = [
-            [left, top],
-            [right, top],
-            [left, bottom],
-            [right, bottom]
-        ];
-
-        for (const [px,py] of corners) {
-            const tileX = Math.floor(px / this.tileSize);
-            const tileY = Math.floor(py / this.tileSize);
-
-            if (tileX < 0 || tileX >= this.map[0].length ||
-                tileY < 0 || tileY >= this.map.length
-            ) {
-                return true;
-            }
-
-            const tile = this.map[tileY][tileX];
-
-            if (tile === 0 || tile === 2) return true;
-        }
-
-        return false;
-    }
 }

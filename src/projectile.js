@@ -13,17 +13,28 @@ export default class Projectile {
         this.dy = (dy / distance) || 0;
         this.speed = 6;
 
-        this.width = 4;
-        this.height = 4;
+        this.width = 6;
+        this.height = 6;
         this.color = "#FFFF00";
         this.markedForDeletion = false;
+        this.damage = 2;
+    }
+
+
+    getBounds() {
+        return {
+            x: this.x - this.width / 2,
+            y: this.y - this.height / 2,
+            w: this.width,
+            h: this.height
+        };
     }
 
     draw(ctx, camera) {
         ctx.fillStyle = this.color;
         ctx.fillRect(
-            this.x - camera.x,
-            this.y - camera.y,
+            this.x - this.width / 2 - camera.x,
+            this.y - this.height / 2 - camera.y,
             this.width,
             this.height
         );
@@ -32,11 +43,6 @@ export default class Projectile {
     update(deltaTime) {
         this.x += this.dx * this.speed * (deltaTime / 16.67);
         this.y += this.dy * this.speed * (deltaTime / 16.67);
-
-        if (this.game.map.isColliding(this.x, this.y, this.width, this.height)) {
-            this.markedForDeletion = true;
-            return;
-        }
 
         const distToDest = Math.hypot(this.destX - this.x, this.destY - this.y);
         if (distToDest < 15) {

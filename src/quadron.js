@@ -11,15 +11,22 @@ export default class Quadron {
         this.hp = 6;
     }
 
+    getBounds() {
+        return {
+            x: this.x - this.width / 2,
+            y: this.y - this.height / 2,
+            w: this.width,
+            h: this.height
+        };
+    }
+
     draw(ctx, camera) {
         ctx.fillStyle = this.color;
-        ctx.beginPath();
         ctx.fillRect(
             this.x - this.width / 2 - camera.x,
             this.y - this.height / 2 - camera.y,
             this.width,
             this.height
         );
-        ctx.fill();
     }
 }

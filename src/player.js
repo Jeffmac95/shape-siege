@@ -8,6 +8,16 @@ export default class Player {
         this.color = "#FF0000";
         this.attackCooldown = 0;
         this.attackCooldownMax = 600;
+        this.hp = 100;
+    }
+
+    getBounds() {
+        return {
+            x: this.x - this.width / 2,
+            y: this.y - this.height / 2,
+            w: this.width,
+            h: this.height
+        };
     }
 
     draw(ctx, camera) {
@@ -56,7 +66,7 @@ export default class Player {
             this.attackCooldown = this.attackCooldownMax;
         }
 
-        if (!this.game.map.isColliding(this.x + dx, this.y, this.width, this.height)) this.x += dx;
-        if (!this.game.map.isColliding(this.x, this.y + dy, this.width, this.height)) this.y += dy;
+        if (!this.game.collisionManager.isColliding(this.x + dx, this.y, this.width, this.height, this.game.map)) this.x += dx;
+        if (!this.game.collisionManager.isColliding(this.x, this.y + dy, this.width, this.height, this.game.map)) this.y += dy;
     }
 }

@@ -48,7 +48,7 @@ export default class CollisionManager {
         for (const m of this.game.monsters) {
             if (m.markedForDeath) continue;
 
-            if (this.aabb(pb, m.getBounds())) {
+            if (this.aabb(pb, m.getBounds()) && player.hp > 0) {
                 player.hp -= 1;
             }
         }

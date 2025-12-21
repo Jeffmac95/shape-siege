@@ -6,6 +6,7 @@ import Projectile from "./projectile.js"
 import WaveManager from "./waveManager.js"
 import Quadron from "./quadron.js"
 import CollisionManager from "./collisionManager.js"
+import UI from "./UI.js"
 
 export default class Game {
     constructor(canvas, ctx) {
@@ -20,6 +21,7 @@ export default class Game {
         this.player = new Player(this);
         this.waveManager = new WaveManager(this);
         this.collisionManager = new CollisionManager(this);
+        this.UI = new UI(this);
         this.projectiles = [];
         this.monsters = [];
     }
@@ -62,5 +64,6 @@ export default class Game {
         this.player.draw(this.ctx, this.camera);
         this.projectiles.forEach(p => p.draw(this.ctx, this.camera));
         this.monsters.forEach(m => m.draw(this.ctx, this.camera));
+        this.UI.draw(this.ctx);
     }
 }

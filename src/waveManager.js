@@ -12,6 +12,9 @@ export default class WaveManager {
         this.waveClearTimer = 0;
         this.timeTilNextWave = 3000;
         this.spawnInterval = 1000;
+        this.waveStartTime = 0;
+        this.waveDuration = 0;
+        this.currentWaveTime = 0;
     }
 
 
@@ -31,6 +34,8 @@ export default class WaveManager {
         this.isWaveActive = true;
         this.currentWave++;
         this.spawnTimer = 0;
+        this.waveStartTime = performance.now();
+        this.currentWaveTime = 0;
         console.log(`Wave ${this.currentWave} started!`);
     }
 
@@ -46,6 +51,8 @@ export default class WaveManager {
 
         if (this.isWaveActive) {
             this.spawnTimer += deltaTime;
+            this.currentWaveTime += deltaTime;
+
             if (this.spawnQueue.length > 0 && this.spawnTimer >= this.currentSpawnInterval) {
                 const spawn = this.spawnQueue.shift();
                 const pos = this.getSpawnPosition(spawn.pos);
@@ -56,6 +63,7 @@ export default class WaveManager {
             if (this.spawnQueue.length === 0 && this.game.monsters.length === 0) {
                 this.isWaveActive = false;
                 this.waveClearTimer = 0;
+                this.waveDuration = this.currentWaveTime;
             }
         }
     }

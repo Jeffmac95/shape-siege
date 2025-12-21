@@ -1,7 +1,7 @@
 export default class Camera {
     constructor(canvas, mapWidth, mapHeight) {
-        this.width = canvas.width;
-        this.height = canvas.height;
+        this.width = 600;
+        this.height = 500;
         this.x = 0;
         this.y = 0;
         this.mapWidth = mapWidth;

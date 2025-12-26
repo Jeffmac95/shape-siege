@@ -4,7 +4,9 @@ export default class WaveManager {
         this.currentWave = 0;
         this.waves = [
             { type: "quadron", count: 1, pos: "random", interval: 400 },
-            { type: "quadron", count: 2, pos: "random", interval: 400 }
+            { type: "quadron", count: 2, pos: "random", interval: 400 },
+            { type: "vertex", count: 1, pos: "random", interval: 400 },
+            { type: "vertex", count: 2, pos: "random", interval: 400 }
         ];
         this.spawnQueue = [];
         this.isWaveActive = false;

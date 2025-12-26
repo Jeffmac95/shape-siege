@@ -2,7 +2,7 @@ export default class Player {
     constructor(game) {
         this.game = game;
         this.width = 30;
-        this.height = 30
+        this.height = 30;
         this.x = 128;
         this.y = 128;
         this.color = "#FF0000";

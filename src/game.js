@@ -7,6 +7,7 @@ import WaveManager from "./waveManager.js"
 import Quadron from "./quadron.js"
 import CollisionManager from "./collisionManager.js"
 import UI from "./UI.js"
+import Vertex from "./vertex.js"
 
 export default class Game {
     constructor(canvas, ctx) {
@@ -17,7 +18,7 @@ export default class Game {
 
         this.input = new InputHandler(this);
         this.map = new Map();
-        this.camera = new Camera(canvas, 1024, 1024); // mapWidth/height in pixels
+        this.camera = new Camera(1024, 1024); // mapWidth/height in pixels
         this.player = new Player(this);
         this.waveManager = new WaveManager(this);
         this.collisionManager = new CollisionManager(this);
@@ -35,6 +36,8 @@ export default class Game {
         let monster;
         if (type === "quadron") {
             monster = new Quadron(this, x, y);
+        } else if (type === "vertex") {
+            monster = new Vertex(this, x, y);
         }
 
         if (monster) {
